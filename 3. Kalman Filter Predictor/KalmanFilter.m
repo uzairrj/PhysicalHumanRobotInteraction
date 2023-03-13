@@ -33,6 +33,31 @@ for i = 2:size(Y,1)
 end
 
 
+%% Kalman Predictor
+kalmanPredData = zeros(3, size(Y,1));
+
+x_km1_k = [Y(1);0;0];
+P_k_km1 = 0.0001*eye(3);
+
+for i = 2:size(Y,1)
+    P_kp1_k = A*P_k_km1*A' - A*P_k_km1*C'*pinv(C*P_k_km1*C'+R)*C*P_k_km1*A'+Q;
+
+    k_k = A*P_k_km1*C'*pinv(C*P_k_km1*C'+R);
+
+    X_Kp1_k = A *x_km1_k + k_k*(Y(i) - C*x_km1_k);
+
+    x_km1_k = X_Kp1_k;
+    kalmanPredData(:,i) = x_km1_k;
+    P_k_km1 = P_kp1_k;
+
+end
+
+%% Graphs
+
+time_signal = out.velocity.time;
+velocity_true = out.velocity.signals.values;
+acceleration_true = out.acceleration.signals.values;
+
 figure(1);
 plot(time_signal, velocity_true);
 hold on;
