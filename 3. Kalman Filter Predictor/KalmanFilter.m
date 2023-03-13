@@ -32,3 +32,19 @@ for i = 2:size(Y,1)
 
 end
 
+
+figure(1);
+plot(time_signal, velocity_true);
+hold on;
+plot(time_signal, kalmanFilterData(2,:));
+hold on;
+plot(time_signal, kalmanPredData(2,:));
+legend('Velocity True', 'Kalman Filter', 'Kalman Predictor' );
+
+figure(2);
+plot(time_signal, acceleration_true);
+hold on;
+plot(time_signal, kalmanFilterData(3,:));
+hold on;
+plot(time_signal, kalmanPredData(3,:));
+legend('Acceleration True', 'Kalman Filter', 'Kalman Predictor' );
