@@ -9,39 +9,39 @@ B = [(Ts^3)/6; (Ts^2)/2; Ts];
 C = [1,0,0];
 
 
-R = 0.000001;
-q = 10;
+R = 0.001;
+q = 1000;
 Q = q*(B*B');
 
 
 %% Kalman Filter
 
-kalmanFilterData = zeros(3, size(Y,1));
+kalmanFilterDataSteady = zeros(3, size(Y,1));
 
 x_k_x = [Y(1);0;0];
 [P_inf] = idare(A',C', Q, R, [],[]);
 
-k_inf = P_inf * C'*pinv(C*P*C'+R);
+k_inf = P_inf * C'*pinv(C*P_inf*C'+R);
 
 for i = 2:size(Y,1)
     X_Kp1_kp1 = A *x_k_x + k_inf*(Y(i) - C*A*x_k_x);
 
-    kalmanFilterData(:,i) = X_Kp1_kp1;
+    kalmanFilterDataSteady(:,i) = X_Kp1_kp1;
     x_k_x = X_Kp1_kp1;
 end
 
 
 %% Kalman Predictor
-kalmanPredData = zeros(3, size(Y,1));
+kalmanPredDataSteady = zeros(3, size(Y,1));
 
 x_km1_k = [Y(1);0;0];
 
-k_inf = A*P_inf * C'*pinv(C*P*C'+R);
+k_inf = A*P_inf * C'*pinv(C*P_inf*C'+R);
 for i = 2:size(Y,1)
     X_Kp1_k = A *x_km1_k + k_inf*(Y(i) - C*x_km1_k);
 
     x_km1_k = X_Kp1_k;
-    kalmanPredData(:,i) = x_km1_k;
+    kalmanPredDataSteady(:,i) = x_km1_k;
 end
 
 %% Graphs
@@ -65,3 +65,18 @@ plot(time_signal, kalmanFilterDataSteady(3,:));
 hold on;
 plot(time_signal, kalmanPredDataSteady(3,:));
 legend('Acceleration True', 'Kalman Filter', 'Kalman Predictor' );
+
+%% Mean Squared Error
+
+disp("RMSE Predictor: ");
+E = RMSE(velocity_true, kalmanFilterDataSteady(2,:)');
+disp(E);
+
+function E = RMSE(Y, Y_hat)
+  square_sum = 0;
+
+  for i = 1: size(Y,1)
+      square_sum = square_sum + ((Y(i) - Y_hat(i))^2);
+  end
+  E = sqrt(square_sum/size(Y,1));
+end
