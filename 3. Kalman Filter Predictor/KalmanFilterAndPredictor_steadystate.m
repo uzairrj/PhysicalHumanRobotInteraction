@@ -29,3 +29,18 @@ for i = 2:size(Y,1)
     kalmanFilterData(:,i) = X_Kp1_kp1;
     x_k_x = X_Kp1_kp1;
 end
+
+
+%% Kalman Predictor
+kalmanPredData = zeros(3, size(Y,1));
+
+x_km1_k = [Y(1);0;0];
+
+k_inf = A*P_inf * C'*pinv(C*P*C'+R);
+for i = 2:size(Y,1)
+    X_Kp1_k = A *x_km1_k + k_inf*(Y(i) - C*x_km1_k);
+
+    x_km1_k = X_Kp1_k;
+    kalmanPredData(:,i) = x_km1_k;
+end
+
