@@ -9,8 +9,8 @@ B = [(Ts^3)/6; (Ts^2)/2; Ts];
 C = [1,0,0];
 
 
-R = 0.000001;
-q = 10;
+R = 0.001;
+q = 1000;
 Q = q*(B*B');
 
 
@@ -73,3 +73,18 @@ plot(time_signal, kalmanFilterData(3,:));
 hold on;
 plot(time_signal, kalmanPredData(3,:));
 legend('Acceleration True', 'Kalman Filter', 'Kalman Predictor' );
+
+%% Mean Squared Error
+
+disp("RMSE Predictor: ");
+E = RMSE(velocity_true, kalmanFilterData(2,:)');
+disp(E);
+
+function E = RMSE(Y, Y_hat)
+  square_sum = 0;
+
+  for i = 1: size(Y,1)
+      square_sum = square_sum + ((Y(i) - Y_hat(i))^2);
+  end
+  E = sqrt(square_sum/size(Y,1));
+end
