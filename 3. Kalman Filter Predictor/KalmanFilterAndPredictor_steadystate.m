@@ -44,3 +44,24 @@ for i = 2:size(Y,1)
     kalmanPredData(:,i) = x_km1_k;
 end
 
+%% Graphs
+
+time_signal = out.velocity.time;
+velocity_true = out.velocity.signals.values;
+acceleration_true = out.acceleration.signals.values;
+
+figure(1);
+plot(time_signal, velocity_true);
+hold on;
+plot(time_signal, kalmanFilterDataSteady(2,:));
+hold on;
+plot(time_signal, kalmanPredDataSteady(2,:));
+legend('Velocity True', 'Kalman Filter', 'Kalman Predictor' );
+
+figure(2);
+plot(time_signal, acceleration_true);
+hold on;
+plot(time_signal, kalmanFilterDataSteady(3,:));
+hold on;
+plot(time_signal, kalmanPredDataSteady(3,:));
+legend('Acceleration True', 'Kalman Filter', 'Kalman Predictor' );
