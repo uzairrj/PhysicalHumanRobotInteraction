@@ -51,3 +51,25 @@ x_smooth = zeros(3,size(Y,1));
 x_smooth(:,size(Y,1)) = x_k_x; %last computed x value
 
 
+%% Kalman Smoother (Backword)
+for i=size(Y,1)-1:-1:1
+    K = p_k_k(:,:,i) *A'*pinv(p_kp1_k(:,:,i+1));
+    x_smooth(:,i) = x_k_k(:,i) + K*(x_smooth(:,i+1) - X_Kp1_k(:,i+1));
+end
+
+
+%% Graphs
+
+time_signal = out.velocity.time;
+velocity_true = out.velocity.signals.values;
+acceleration_true = out.acceleration.signals.values;
+
+figure(1);
+hold on;
+plot(time_signal, velocity_true);
+hold on;
+plot(time_signal, x_smooth(2,:));
+hold on;
+plot(time_signal, x_k_k(2,:));
+hold on;
+legend('Velocity True', 'Kalman Filter (Smooth)', 'Kalman Filter' );
