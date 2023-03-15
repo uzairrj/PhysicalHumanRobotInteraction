@@ -73,3 +73,30 @@ hold on;
 plot(time_signal, x_k_k(2,:));
 hold on;
 legend('Velocity True', 'Kalman Filter (Smooth)', 'Kalman Filter' );
+
+figure(2);
+plot(time_signal, acceleration_true);
+hold on;
+plot(time_signal, x_smooth(3,:));
+hold on;
+plot(time_signal, x_k_k(3,:));
+legend('Acceleration True', 'Kalman Filter (Smooth)', 'Kalman Filter');
+
+%% Mean Squared Error
+
+disp("RMSE Filter(Smooth): ");
+E = RMSE(velocity_true, x_smooth(2,:)');
+disp(E);
+
+disp("RMSE Filter: ");
+E = RMSE(velocity_true, x_k_k(2,:)');
+disp(E);
+
+function E = RMSE(Y, Y_hat)
+  square_sum = 0;
+
+  for i = 1: size(Y,1)
+      square_sum = square_sum + ((Y(i) - Y_hat(i))^2);
+  end
+  E = sqrt(square_sum/size(Y,1));
+end
