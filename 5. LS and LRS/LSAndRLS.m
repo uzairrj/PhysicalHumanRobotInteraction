@@ -74,3 +74,33 @@ hold on;
 plot(time_signal, x_smooth(3,:));
 legend('Acceleration True', 'Kalman Filter (Smooth)');
 
+%% Mean Squared Error
+
+disp("RMSE Kalman Filter(Smooth) Velocity: ");
+E = RMSE(velocity_true, x_smooth(2,:)');
+disp(E);
+
+disp("RMSE Kalman Filter (Smooth) Acceleration: ");
+E = RMSE(acceleration_true, x_smooth(3,:)');
+disp(E);
+
+%% Least Square Prediction
+X = [x_smooth(2,:)', x_smooth(3,:)'];
+Y = out.voltages.Data;
+
+beta = pinv(X'*X)*X'*Y;
+
+LS_pred = X*beta;
+
+figure(3);
+hold on;
+plot(time_signal, Y);
+hold on;
+plot(time_signal, LS_pred);
+legend('Voltage True', 'Voltage Pred');
+
+
+disp("RMSE LS Voltage: ");
+E = RMSE(velocity_true, LS_pred);
+disp(E);
+
