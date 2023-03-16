@@ -104,3 +104,48 @@ disp("RMSE LS Voltage: ");
 E = RMSE(velocity_true, LS_pred);
 disp(E);
 
+
+%% Recursive Least Square Prediction
+X = [x_smooth(2,:)', x_smooth(3,:)'];
+Y = out.voltages.Data;
+
+
+p_pre = 0.0001*eye(2);
+beta_pre = [0;0];
+
+lambda = 0.95;
+
+RLS_pred = zeros(1,size(Y,1));
+
+for i = 2:size(Y,1)
+    e = Y(i) - X(i,:)*beta_pre;
+    P = 1/lambda*(p_pre - (p_pre*X(i,:)'*X(i,:)*p_pre)/(lambda+X(i,:)*p_pre*X(i,:)'));
+    K = P*X(i,:)';
+    beta = beta_pre +  K*e;
+
+    RLS_pred(i) = X(i,:)*beta+e;
+    beta_pre = beta;
+    p_pre = P;
+end
+
+disp("RMSE LSR Voltage: ");
+E = RMSE(Y, RLS_pred);
+disp(E);
+
+
+figure(4);
+hold on;
+plot(time_signal, Y);
+hold on;
+plot(time_signal, RLS_pred);
+legend('Voltage True', 'Voltage Pred');
+
+%% Function Defination
+function E = RMSE(Y, Y_hat)
+  square_sum = 0;
+
+  for i = 1: size(Y,1)
+      square_sum = square_sum + ((Y(i) - Y_hat(i))^2);
+  end
+  E = sqrt(square_sum/size(Y,1));
+end
