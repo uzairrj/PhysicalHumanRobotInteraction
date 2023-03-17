@@ -37,12 +37,9 @@ Be = 100;
 Ke = 200; 
 xe = 15;
 
-% Transportation variable (Characteristic Impedance)
+% Transportation variables
 b = 25;
-
-%delay
 delay = 10;
-
 lambda = 60;
 
 Ts = 0.001;
