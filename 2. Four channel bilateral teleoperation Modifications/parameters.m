@@ -35,4 +35,4 @@ Ks = 4*Km;
 % Environment impedance parameters
 Be = 100; 
 Ke = 200; 
-xe = 15;
+xe = 300;
