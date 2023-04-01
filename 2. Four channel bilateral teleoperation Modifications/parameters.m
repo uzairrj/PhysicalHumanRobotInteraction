@@ -3,7 +3,7 @@ clear all;
 close all;
 
 % Input function parameter (sin or step with low pass filter)
-A = 200;
+A = 25;
 
 % Low pass frequency cuff off
 Flp = 0.5;
@@ -21,7 +21,7 @@ Bh = 1;
 % Inertia/Damping of robot dynamics
 Mm = 0.5;
 Ms = 2;
-Dm = 2.3;
+Dm = 0.3;
 Ds = 1.2;
 
 % Master controller
@@ -35,4 +35,4 @@ Ks = 4*Km;
 % Environment impedance parameters
 Be = 100; 
 Ke = 200; 
-xe = 300;
+xe = 15;
