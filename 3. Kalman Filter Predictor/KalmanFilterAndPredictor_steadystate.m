@@ -68,9 +68,24 @@ legend('Acceleration True', 'Kalman Filter', 'Kalman Predictor' );
 
 %% Mean Squared Error
 
-disp("RMSE Predictor: ");
+disp("RMSE Filter: ");
 E = RMSE(velocity_true, kalmanFilterDataSteady(2,:)');
 disp(E);
+
+disp("RMSE Predictor: ");
+E = RMSE(velocity_true, kalmanPredDataSteady(2,:)');
+disp(E);
+
+
+disp("RMSE Filter: ");
+E = RMSE(acceleration_true, kalmanFilterDataSteady(3,:)');
+disp(E);
+
+
+disp("RMSE Predictor: ");
+E = RMSE(acceleration_true, kalmanPredDataSteady(3,:)');
+disp(E);
+
 
 function E = RMSE(Y, Y_hat)
   square_sum = 0;
