@@ -92,6 +92,14 @@ disp("RMSE Filter: ");
 E = RMSE(velocity_true, x_k_k(2,:)');
 disp(E);
 
+disp("RMSE Filter Acceleration(Smooth): ");
+E = RMSE(acceleration_true, x_smooth(3,:)');
+disp(E);
+
+disp("RMSE Filter Acceleration: ");
+E = RMSE(acceleration_true, x_k_k(3,:)');
+disp(E);
+
 function E = RMSE(Y, Y_hat)
   square_sum = 0;
 
