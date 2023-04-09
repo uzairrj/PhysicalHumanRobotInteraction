@@ -35,7 +35,7 @@ Ks = 240;
 % Environment impedance parameters
 Be = 100; 
 Ke = 200; 
-xe = 30;
+xe = 9;
 
 % Transportation variables
 b = 70;
