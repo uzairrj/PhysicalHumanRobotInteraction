@@ -35,15 +35,15 @@ Ks = 4*Km;
 % Environment impedance parameters
 Be = 100; 
 Ke = 200; 
-xe = 3;
+xe = 60;
 
 % Transportation variables
 delay = 10;
 
 %Tank parameters
-alpha = 1;
-beta = 0.1;
-Hd = 1000;
+alpha = 55;
+beta = 0.001;
+Hd = 550;
 
 Hm_init = 0;
 Hs_init = 0;
