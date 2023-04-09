@@ -35,7 +35,7 @@ Ks = 4*Km;
 % Environment impedance parameters
 Be = 100; 
 Ke = 200; 
-xe = 50;
+xe = 6;
 
 % Transportation variables
 b = 10;
