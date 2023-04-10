@@ -11,12 +11,12 @@ Flp = 5;
 Fc = 1; 
 
 % Human intention controller (PD)
-Ph = 5; 
-Dh = 5; 
+Ph = 10*1; 
+Dh = 20*0.8; 
 
 % Human impedance parameters
-Jh = 0;
-Bh = 1.5; 
+Jh = 1;
+Bh = 1; 
 
 % Inertia/Damping of robot dynamics
 Mm = 0.5;
@@ -25,22 +25,28 @@ Dm = 1.3;
 Ds = 1.2;
 
 % Master controller
-Bm = 100;
-Km = 50;
+Bm = 20*0.8;
+Km = 10*1;
 
 % Slave controller
-Bs = 100; 
-Ks = 80; 
+Bs = 4*Bm; 
+Ks = 4*Km; 
 
 % Environment impedance parameters
-Be = 10; 
-Ke = 30; 
-xe = 4;
+Be = 100; 
+Ke = 200; 
+xe = 1000;
 
 % Transportation variables
-b = 10;
-delay = 1;
-lambda = 50;
+delay = 10;
+
+%Tank parameters
+alpha = 1;
+beta = 0.01;
+Hd = 5;
+
+Hm_init = 0;
+Hs_init = 0;
 
 %aditional parameters
 Ts = 0.001;
